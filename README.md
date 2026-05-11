@@ -12,8 +12,8 @@ A student complaint registration Android app built with **Kotlin** and **Firebas
 | **Splash Screen** | **Registration Form** |
 | ![Validation Errors](screenshots/form_validation.png) | ![Complaint List](screenshots/complaint_list.png) |
 | **Form Validation** | **Complaint List** |
-| ![Complaint Detail](screenshots/complaint_detail.png) | ![Empty State](screenshots/empty_state.png) |
-| **Complaint Detail** | **Empty State** |
+| ![Complaint Detail](screenshots/complaint.png) | ![Empty State](screenshots/Complaint_Detail.png) |
+| **Complaints** | **Complaint Details** |
  
  
 ---
@@ -181,6 +181,8 @@ app/
 4. Let Gradle sync complete
 5. Connect a device or start an emulator (min API 24)
 6. Press **Run** or `Shift + F10`
+7. Run "ComplainHub.apk" in root folder
+
 **Requirements:**
  
 | | |
