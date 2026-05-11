@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">Quiz2</string>
+    <string name="app_name">ComplainHub</string>
+    <string name="tagline">Your voice, our priority</string>
+    <string name="submit_complaint">Submit Complaint</string>
+    <string name="view_complaints">View All Complaints</string>
+    <string name="no_complaints">No complaints submitted yet</string>
+    <string name="go_back_hint">Go back and submit your first complaint</string>
 </resources>
