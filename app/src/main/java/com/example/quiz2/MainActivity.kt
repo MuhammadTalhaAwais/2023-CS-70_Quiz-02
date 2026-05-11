@@ -44,7 +44,9 @@ class MainActivity : AppCompatActivity() {
         setupSpinners()
 
         buttonSubmit.setOnClickListener {
-            submitComplaint()
+            if (validateForm()) {
+                submitComplaint()
+            }
         }
 
         buttonViewComplaints.setOnClickListener {
@@ -82,7 +84,7 @@ class MainActivity : AppCompatActivity() {
         spinnerPriority.adapter = priorityAdapter
     }
 
-    private fun submitComplaint() {
+    private fun validateForm(): Boolean {
         val studentName = editStudentName.text.toString().trim()
         val rollNumber = editRollNumber.text.toString().trim()
         val phoneNumber = editPhoneNumber.text.toString().trim()
@@ -93,43 +95,105 @@ class MainActivity : AppCompatActivity() {
         val priority = spinnerPriority.selectedItem.toString()
 
         if (studentName.isEmpty()) {
-            editStudentName.error = "Please enter your name"
+            editStudentName.error = "Name is required"
             editStudentName.requestFocus()
-            return
+            return false
         }
+
+        if (studentName.length < 3) {
+            editStudentName.error = "Name must be at least 3 characters"
+            editStudentName.requestFocus()
+            return false
+        }
+
+        if (!studentName.matches(Regex("^[a-zA-Z ]+$"))) {
+            editStudentName.error = "Name can only contain letters"
+            editStudentName.requestFocus()
+            return false
+        }
+
         if (rollNumber.isEmpty()) {
-            editRollNumber.error = "Please enter roll number"
+            editRollNumber.error = "Roll number is required"
             editRollNumber.requestFocus()
-            return
+            return false
         }
+
+        if (!rollNumber.matches(Regex("^[A-Za-z0-9\\-/]+$"))) {
+            editRollNumber.error = "Enter a valid roll number (e.g. BSCS-101 or 2023-CS-70)"
+            editRollNumber.requestFocus()
+            return false
+        }
+
         if (phoneNumber.isEmpty()) {
-            editPhoneNumber.error = "Please enter phone number"
+            editPhoneNumber.error = "Phone number is required"
             editPhoneNumber.requestFocus()
-            return
+            return false
         }
+
+        if (!phoneNumber.matches(Regex("^03[0-9]{9}$"))) {
+            editPhoneNumber.error = "Enter a valid Pakistani number (e.g. 03001234567)"
+            editPhoneNumber.requestFocus()
+            return false
+        }
+
         if (department.isEmpty()) {
-            editDepartment.error = "Please enter department"
+            editDepartment.error = "Department is required"
             editDepartment.requestFocus()
-            return
+            return false
         }
+
+        if (department.length < 2) {
+            editDepartment.error = "Enter a valid department name"
+            editDepartment.requestFocus()
+            return false
+        }
+
         if (complaintTitle.isEmpty()) {
-            editComplaintTitle.error = "Please enter complaint title"
+            editComplaintTitle.error = "Complaint title is required"
             editComplaintTitle.requestFocus()
-            return
+            return false
         }
+
+        if (complaintTitle.length < 5) {
+            editComplaintTitle.error = "Title must be at least 5 characters"
+            editComplaintTitle.requestFocus()
+            return false
+        }
+
         if (category == "Select Category") {
-            Toast.makeText(this, "Please select a category", Toast.LENGTH_SHORT).show()
-            return
+            Toast.makeText(this, "Please select a complaint category", Toast.LENGTH_SHORT).show()
+            return false
         }
+
         if (priority == "Select Priority") {
             Toast.makeText(this, "Please select a priority level", Toast.LENGTH_SHORT).show()
-            return
+            return false
         }
+
         if (description.isEmpty()) {
-            editDescription.error = "Please enter complaint description"
+            editDescription.error = "Description is required"
             editDescription.requestFocus()
-            return
+            return false
         }
+
+        if (description.length < 20) {
+            editDescription.error = "Please describe your complaint in at least 20 characters"
+            editDescription.requestFocus()
+            return false
+        }
+
+        return true
+    }
+
+    private fun submitComplaint() {
+        val studentName = editStudentName.text.toString().trim()
+        val rollNumber = editRollNumber.text.toString().trim()
+        val phoneNumber = editPhoneNumber.text.toString().trim()
+        val department = editDepartment.text.toString().trim()
+        val complaintTitle = editComplaintTitle.text.toString().trim()
+        val description = editDescription.text.toString().trim()
+        val category = spinnerCategory.selectedItem.toString()
+        val priority = spinnerPriority.selectedItem.toString()
 
         val complaint = Complaint(
             studentName = studentName,
@@ -157,7 +221,7 @@ class MainActivity : AppCompatActivity() {
             onFailure = { error ->
                 progressBar.visibility = View.GONE
                 buttonSubmit.isEnabled = true
-                Toast.makeText(this, "Failed: $error", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Failed to submit: $error", Toast.LENGTH_LONG).show()
             }
         )
     }
@@ -171,5 +235,6 @@ class MainActivity : AppCompatActivity() {
         editDescription.setText("")
         spinnerCategory.setSelection(0)
         spinnerPriority.setSelection(0)
+        editStudentName.requestFocus()
     }
 }
