@@ -41,9 +41,6 @@ A student complaint registration Android app built with **Kotlin** and **Firebas
 
 </div>
 
-> Place your screenshots inside a `screenshots/` folder in the root of the project with these exact filenames:
-> `splash_screen.png` · `registration_form.png` · `form_validation.png` · `complaint_list.png` · `complaint.png` · `Complaint_Detail.png`
-
 ---
 
 ## About
